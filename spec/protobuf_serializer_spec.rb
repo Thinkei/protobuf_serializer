@@ -20,11 +20,11 @@ module Protobuf
       attr_accessor :members, :permission, :flag
     end
 
-    class PermissionSerializer < ActiveModel::Serializer
+    class PermissionSerializer < ProtobufSerializer::Base
       attributes :admin
     end
 
-    class MemberSerializer < ActiveModel::Serializer
+    class MemberSerializer < ProtobufSerializer::Base
       attributes :name
 
       def name
@@ -32,7 +32,7 @@ module Protobuf
       end
     end
 
-    class MembersSerializer < ActiveModel::Serializer
+    class MembersSerializer < ProtobufSerializer::Base
       has_many :members, serializer: Protobuf::Model::MemberSerializer
       has_one :permission, serializer: Protobuf::Model::PermissionSerializer
 
@@ -88,16 +88,15 @@ describe ProtobufSerializer do
   end
 
   it 'serializes into Protobuf object' do
-    serializer = Protobuf::Model::PermissionSerializer.new(permission)
-    result = ProtobufSerializer::ProtobufAdapter.new(serializer).serializable_hash
+    result = Protobuf::Model::PermissionSerializer.serialize(permission)
 
     expect(result).to be_a_kind_of(Protobuf::Model::Permission)
     expect(result.admin).to eq(true)
   end
 
   it 'serializes into Protobuf object with a collection inside' do
-    serializer = Protobuf::Model::MembersSerializer.new(members)
-    result = ProtobufSerializer::ProtobufAdapter.new(serializer).serializable_hash
+    result = Protobuf::Model::MembersSerializer.serialize(members)
+
     expect(result.members.first).to be_a_kind_of(Protobuf::Model::Member)
     expect(result.members.map(&:name)).to match_array(%w(NGUYEN TIEN))
     expect(result.permission).to be_a_kind_of(Protobuf::Model::Permission)
@@ -105,8 +104,8 @@ describe ProtobufSerializer do
   end
 
   it 'serializes empty object' do
-    serializer = Protobuf::Model::MembersSerializer.new(empty_members)
-    result = ProtobufSerializer::ProtobufAdapter.new(serializer).serializable_hash
+    result = Protobuf::Model::MembersSerializer.serialize(empty_members)
+
     expect(result.members).to eq([])
     expect(result.permission).to eq(nil)
     expect(result.flag).to eq('Read')

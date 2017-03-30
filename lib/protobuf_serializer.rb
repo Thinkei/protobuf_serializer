@@ -2,6 +2,13 @@ require 'protobuf_serializer/version'
 require 'active_model_serializers'
 
 module ProtobufSerializer
+  class Base < ActiveModel::Serializer
+    def self.serialize(objects)
+      serializer = new(objects)
+      ProtobufSerializer::ProtobufAdapter.new(serializer).serializable_hash
+    end
+  end
+
   class ProtobufAdapter < ActiveModelSerializers::Adapter::Base
     def serializable_hash(*)
       process_serializer(serializer)
