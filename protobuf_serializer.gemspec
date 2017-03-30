@@ -6,12 +6,12 @@ require 'protobuf_serializer/version'
 Gem::Specification.new do |spec|
   spec.name          = "protobuf_serializer"
   spec.version       = ProtobufSerializer::VERSION
-  spec.authors       = ["Tien Le"]
-  spec.email         = ["tien@employmenthero.com"]
+  spec.authors       = ["Tien Le", "Nguyen Nguyen"]
+  spec.email         = ["tien@employmenthero.com", "phuong.nguyen@employmenthero.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{A custom adapter and serializer for generating Protobuf objects}
+  spec.description   = %q{A custom adapter and serializer for generating Protobuf objects}
+  spec.homepage      = "https://secure.employmenthero.com"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_runtime_dependency "active_model_serializers", "~> 0.10.0"
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
