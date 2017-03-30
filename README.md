@@ -19,10 +19,10 @@ $ gem install protobuf_serializer
 
 ## Usage
 
-###Declaration
+### Declaration
 With pre-defined models, you need to define a new serializer class, which shows the attributes that need to be serialized.
 
-####Example Model
+#### Example Model
 ```ruby
     class Permission
       include ActiveModel::Model
@@ -31,14 +31,14 @@ With pre-defined models, you need to define a new serializer class, which shows 
     end
 ```
 
-####Serializer Class
+#### Serializer Class
 ```ruby
 class PermissionSerializer < ProtobufSerializer::Base
 attributes :admin
 end
 ```
 
-###Call
+### Call
 ```ruby
 result = Protobuf::Model::PermissionSerializer.serialize(permission)
 ```
