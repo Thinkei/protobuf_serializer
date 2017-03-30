@@ -3,8 +3,11 @@ require 'active_model_serializers'
 
 module ProtobufSerializer
   class Base < ActiveModel::Serializer
-    def self.serialize(objects)
-      serializer = new(objects)
+    def self.serialize(object)
+      if object.is_a?(Hash)
+        object = OpenStruct.new(object)
+      end
+      serializer = new(object)
       ProtobufSerializer::ProtobufAdapter.new(serializer).serializable_hash
     end
   end

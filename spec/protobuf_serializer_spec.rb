@@ -60,20 +60,20 @@ class Member
 end
 
 describe ProtobufSerializer do
-  let(:permission) { Permission.new(admin: true) }
+  let(:permission) { { admin: true } }
   let(:members) do
-    ProtobufSerializer::OpenStruct.new(
+    {
       members: [Member.new(name: 'Nguyen'), Member.new(name: 'Tien')],
       permission: Permission.new(admin: true),
       flag: false
-    )
+    }
   end
   let(:empty_members) do
-    ProtobufSerializer::OpenStruct.new(
+    {
       members: [],
       permission: nil,
       flag: nil
-    )
+    }
   end
 
   before do
