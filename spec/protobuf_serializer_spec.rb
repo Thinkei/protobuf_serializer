@@ -59,24 +59,17 @@ class Member
   attr_accessor :name
 end
 
-class Members
-  include ActiveModel::Model
-  include ActiveModel::Serialization
-
-  attr_accessor :members, :permission, :flag
-end
-
 describe ProtobufSerializer do
   let(:permission) { Permission.new(admin: true) }
   let(:members) do
-    Members.new(
+    ProtobufSerializer::OpenStruct.new(
       members: [Member.new(name: 'Nguyen'), Member.new(name: 'Tien')],
       permission: Permission.new(admin: true),
       flag: false
     )
   end
   let(:empty_members) do
-    Members.new(
+    ProtobufSerializer::OpenStruct.new(
       members: [],
       permission: nil,
       flag: nil

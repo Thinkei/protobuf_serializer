@@ -39,4 +39,17 @@ module ProtobufSerializer
       Module.const_get(serializer.class.name.gsub('Serializer', ''))
     end
   end
+
+  class OpenStruct 
+    include ActiveModel::Model
+    include ActiveModel::Serialization
+
+    def initialize(options)
+      options.keys.each do |key|
+        self.class.send :attr_accessor, key
+      end
+
+      super
+    end
+  end
 end
