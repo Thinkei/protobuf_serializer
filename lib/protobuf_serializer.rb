@@ -1,9 +1,9 @@
-require "protobuf_serializer/version"
+require 'protobuf_serializer/version'
 require 'active_model_serializers'
 
 module ProtobufSerializer
   class ProtobufAdapter < ActiveModelSerializers::Adapter::Base
-    def serializable_hash(options = nil)
+    def serializable_hash(*)
       process_serializer(serializer)
     end
 
@@ -21,10 +21,8 @@ module ProtobufSerializer
     end
 
     def process_association(serializer)
-      if serializer.respond_to? :each 
-        return serializer.map do |ser|
-          process_serializer(ser) 
-        end
+      if serializer.respond_to? :each
+        return serializer.map { |ser| process_serializer(ser) }
       end
 
       process_serializer(serializer)
