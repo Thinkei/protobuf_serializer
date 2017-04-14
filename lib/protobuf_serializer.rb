@@ -3,10 +3,9 @@ require 'active_model_serializers'
 
 module ProtobufSerializer
   class Base < ActiveModel::Serializer
+    # consider to add adatper_options to this method
     def self.serialize(object)
-      if object.is_a?(Hash)
-        object = OpenStruct.new(object)
-      end
+      object = OpenStruct.new(object) if object.is_a?(Hash)
       serializer = new(object)
       ProtobufSerializer::ProtobufAdapter.new(serializer).serializable_hash
     end
@@ -24,7 +23,8 @@ module ProtobufSerializer
       serialized_hash = serializer.attributes
 
       serializer.associations.each do |association|
-        serialized_hash[association.key] = process_association(association.serializer)
+        serialized_hash[association.key] =
+          process_association(association.serializer)
       end
 
       protobuf_class(serializer).new(serialized_hash)
@@ -32,7 +32,7 @@ module ProtobufSerializer
 
     def process_association(serializer)
       if serializer.respond_to? :each
-        return serializer.map { |ser| process_serializer(ser) }
+        return serializer.map(&method(:process_serializer))
       end
 
       process_serializer(serializer)
