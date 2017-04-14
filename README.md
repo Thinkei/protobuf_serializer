@@ -24,17 +24,17 @@ With pre-defined models, you need to define a new serializer class, which shows 
 
 #### Example Model
 ```ruby
-    class Permission
-      include ActiveModel::Model
+class Permission
+  include ActiveModel::Model
 
-      attr_accessor :admin
-    end
+  attr_accessor :admin
+end
 ```
 
 #### Serializer Class
 ```ruby
 class PermissionSerializer < ProtobufSerializer::Base
-attributes :admin
+  attributes :admin
 end
 ```
 
@@ -44,10 +44,9 @@ result = Protobuf::Model::PermissionSerializer.serialize(permission)
 ```
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/protobuf_serializer. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Thinkei/protobuf_serializer. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
